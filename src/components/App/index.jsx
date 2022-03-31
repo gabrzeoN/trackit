@@ -1,5 +1,5 @@
-import { useState, useContext } from "react";
-import { Link, BrowserRouter, Routes, Route} from "react-router-dom";
+import { useState } from "react";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 import styledComponents from "styled-components";
 
 import LoginPage from "../LoginPage";

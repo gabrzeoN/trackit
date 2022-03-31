@@ -3,9 +3,11 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export default function RegisterPage(){
-    const navigate = useNavigate();
+import { ThreeDots } from  'react-loader-spinner'
 
+export default function RegisterPage(){
+    const postRegisterURL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up";
+    const navigate = useNavigate();
     const [disabled, setDisabled] = useState(false);
     const [registerData, setRegisterData] = useState({
         email: "",
@@ -16,9 +18,9 @@ export default function RegisterPage(){
 
     function register(event){
         event.preventDefault();
-
         setDisabled(true);
-        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", registerData)
+        
+        axios.post(postRegisterURL, registerData)
         .then(({data}) => {
             console.log("deu certo");
             console.log(data);
@@ -29,7 +31,6 @@ export default function RegisterPage(){
             setDisabled(false);
         });
     }
-
 
     return(
         <Main >
@@ -42,7 +43,7 @@ export default function RegisterPage(){
                         placeholder="Email"
                         value={registerData.email}
                         required
-                        type="text"
+                        type="email"
                         disabled={disabled}
                         onChange={e => setRegisterData({...registerData, email: e.target.value})}
                     />
@@ -50,7 +51,7 @@ export default function RegisterPage(){
                         placeholder="Senha"
                         value={registerData.password}
                         required
-                        type="text"
+                        type="password"
                         disabled={disabled}
                         onChange={e => setRegisterData({...registerData, password: e.target.value})}
                     />
@@ -76,6 +77,12 @@ export default function RegisterPage(){
             <Link to="/" >
                 <p>Já tem uma conta? Faça login!</p>
             </Link>
+            <ThreeDots
+                height="100"
+                width="100"
+                color='grey'
+                ariaLabel='loading'
+            />
         </Main>
     );
 }
