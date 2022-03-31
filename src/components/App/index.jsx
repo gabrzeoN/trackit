@@ -12,12 +12,14 @@ export default function App(){
 
 
     return(
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<LoginPage />} />
-                <Route path="/cadastro" element={<RegisterPage />} />
-            </Routes>
-        </BrowserRouter>
+        <UserContext.Provider value={ {token, setToken} } >
+            <BrowserRouter>
+                <Routes>
+                        <Route path="/" element={<LoginPage />} />
+                        <Route path="/cadastro" element={<RegisterPage />} />
+                </Routes>
+            </BrowserRouter>
+        </UserContext.Provider>
     );
 }
 
