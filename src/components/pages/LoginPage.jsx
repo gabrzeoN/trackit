@@ -8,9 +8,9 @@ import axios from "axios";
 export default function LoginPage(){
     const postLoginURL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
     const navigate = useNavigate();
-    const {setToken} = useContext(UserContext);
+    const {setUserData} = useContext(UserContext);
     const [disabled, setDisabled] = useState(false);
-    const [userData, setUserData] = useState({
+    const [loginData, setLoginData] = useState({
         email: "",
         password: ""
     })
@@ -19,10 +19,10 @@ export default function LoginPage(){
         event.preventDefault();
         setDisabled(true);
         
-        axios.post(postLoginURL, userData)
+        axios.post(postLoginURL, loginData)
         .then(({data}) => {
-            setToken(data.token);
-            navigate("/habitos");
+            setUserData({...data, password: ""});
+            navigate("/hoje");
         })
         .catch(error => {
             alert(error.response.data.message)
@@ -39,19 +39,19 @@ export default function LoginPage(){
             <form action="" onSubmit={login}>
                     <input 
                         placeholder="Email"
-                        value={userData.email}
+                        value={loginData.email}
                         required
                         type="email"
                         disabled={disabled}
-                        onChange={e => setUserData({...userData, email: e.target.value})}
+                        onChange={e => setLoginData({...loginData, email: e.target.value})}
                     />
                     <input 
                         placeholder="Senha"
-                        value={userData.password}
+                        value={loginData.password}
                         required
                         type="password"
                         disabled={disabled}
-                        onChange={e => setUserData({...userData, password: e.target.value})}
+                        onChange={e => setLoginData({...loginData, password: e.target.value})}
                     />
                     <button type="submit" disabled={disabled} >Entrar</button>
                 </form>
@@ -70,7 +70,7 @@ const Main = styled.main`
 `;
 
 const Logo = styled.section`
-
+    font-family: 'Playball', cursive;
 `;
 
 const UserData = styled.section`
