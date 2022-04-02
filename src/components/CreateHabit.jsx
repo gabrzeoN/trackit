@@ -1,18 +1,14 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import HabitContext from "../contexts/HabitContext";
 import UserContext from "../contexts/UserContext";
 
 export default function CreateHabit(){
     const postHabitURL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
-    const { setCreatingHabit, creatingHabitData, setCreatingHabitData } = useContext(HabitContext);
+    const { setCreatingHabit, creatingHabitData, setCreatingHabitData, loadUserHabits, config } = useContext(HabitContext);
     const { userData } = useContext(UserContext);
-    const config = {
-        headers: {
-            "Authorization" : `Bearer ${userData.token}`
-        }
-    }
+    const [disabled, setDisabled] = useState(false);
 
     function hideCreateHabit(event){
         event ? event.preventDefault() : event = null;
@@ -39,13 +35,16 @@ export default function CreateHabit(){
         if(creatingHabitData.days.length <= 0){
             alert("Nenhum dia da semana selecionado!");
         }else{
+            setDisabled(true);
             axios.post(postHabitURL, creatingHabitData, config)
             .then(({data}) => {
                 console.log(data);
                 clearCreatingHabitData();
                 hideCreateHabit();
+                loadUserHabits();
             })
             .catch(error => {
+                setDisabled(false);
                 alert(error.response.data.message);
             });
         }
@@ -58,21 +57,22 @@ export default function CreateHabit(){
                     type="text" 
                     required
                     placeholder="nome do hábito" 
-                    value={creatingHabitData.name} 
+                    value={creatingHabitData.name}
+                    disabled={disabled} 
                     onChange={(e) => setCreatingHabitData({...creatingHabitData, name: e.target.value})} 
                 />
-                <WeekdaysSelection>
-                    <SelectWeekday type="button" value="D" days={creatingHabitData.days} id={0} onClick={() => toggleWeekday(0)} />
-                    <SelectWeekday type="button" value="S" days={creatingHabitData.days} id={1} onClick={() => toggleWeekday(1)} />
-                    <SelectWeekday type="button" value="T" days={creatingHabitData.days} id={2} onClick={() => toggleWeekday(2)} />
-                    <SelectWeekday type="button" value="Q" days={creatingHabitData.days} id={3} onClick={() => toggleWeekday(3)} />
-                    <SelectWeekday type="button" value="Q" days={creatingHabitData.days} id={4} onClick={() => toggleWeekday(4)} />
-                    <SelectWeekday type="button" value="S" days={creatingHabitData.days} id={5} onClick={() => toggleWeekday(5)} />
-                    <SelectWeekday type="button" value="S" days={creatingHabitData.days} id={6} onClick={() => toggleWeekday(6)} />
+                <WeekdaysSelection >
+                    <SelectWeekday type="button" value="D" days={creatingHabitData.days} id={0} disabled={disabled} onClick={() => toggleWeekday(0)} />
+                    <SelectWeekday type="button" value="S" days={creatingHabitData.days} id={1} disabled={disabled} onClick={() => toggleWeekday(1)} />
+                    <SelectWeekday type="button" value="T" days={creatingHabitData.days} id={2} disabled={disabled} onClick={() => toggleWeekday(2)} />
+                    <SelectWeekday type="button" value="Q" days={creatingHabitData.days} id={3} disabled={disabled} onClick={() => toggleWeekday(3)} />
+                    <SelectWeekday type="button" value="Q" days={creatingHabitData.days} id={4} disabled={disabled} onClick={() => toggleWeekday(4)} />
+                    <SelectWeekday type="button" value="S" days={creatingHabitData.days} id={5} disabled={disabled} onClick={() => toggleWeekday(5)} />
+                    <SelectWeekday type="button" value="S" days={creatingHabitData.days} id={6} disabled={disabled} onClick={() => toggleWeekday(6)} />
                 </WeekdaysSelection>
                 <div>
-                    <button onClick={hideCreateHabit} >Cancelar</button>
-                    <button type="submit" >Salvar</button>
+                    <button onClick={hideCreateHabit} disabled={disabled} >Cancelar</button>
+                    <button type="submit" disabled={disabled} >Salvar</button>
                 </div>
             </form>
         </CreateHabitContent>

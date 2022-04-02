@@ -4,10 +4,12 @@ import axios from "axios";
 import Header from "../Header";
 import Footer from "../Footer";
 import CreateHabit from "../CreateHabit";
+import Habit from "../Habit";
 import UserContext from "../../contexts/UserContext";
 import HabitContext from "../../contexts/HabitContext";
 
 import { useEffect, useState, useContext } from "react";
+// import DeleteHabit from "../DeleteHabit";
 
 export default function HabitsPage(){
     const getAllHabitsURL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
@@ -19,61 +21,24 @@ export default function HabitsPage(){
     }
 
     const [creatingHabit, setCreatingHabit] = useState(false);
+    const [deletingHabit, setDeletingHabit] = useState(false);
     const [creatingHabitData, setCreatingHabitData] = useState( {name: "", days: []} );
+
 
     function loadUserHabits(){
         axios.get(getAllHabitsURL, config)
         .then(({data}) => {
-            alert("Getting habits from server!");
-            // setUserHabits([]);
-    
-            // [
-            //     {
-            //         id: 1,
-            //         name: "Nome do hábito",
-            //         days: [1, 3, 5]
-            //     },
-            //     {
-            //         id: 2,
-            //         name: "Nome do hábito 2",
-            //         days: [1, 3, 4, 6]
-            //     }
-            // ]
-    
+            setUserHabits([...data]);    
         })
         .catch(error => {
             alert(error.response.data.message);
-            // setDisabled(false);
         });
+        
     }
 
     useEffect(() => {
-        // loadUserHabits();
-        axios.get(getAllHabitsURL, config)
-        .then(({data}) => {
-            console.log(data);
-            // alert("Getting habits from server!");
-            // setUserHabits([]);
-    
-            // [
-            //     {
-            //         id: 1,
-            //         name: "Nome do hábito",
-            //         days: [1, 3, 5]
-            //     },
-            //     {
-            //         id: 2,
-            //         name: "Nome do hábito 2",
-            //         days: [1, 3, 4, 6]
-            //     }
-            // ]
-    
-        })
-        .catch(error => {
-            alert(error.response.data.message);
-            // setDisabled(false);
-        });
-    }, [userHabits]);
+        loadUserHabits();
+    }, []);
 
     return(
         <>
@@ -83,18 +48,34 @@ export default function HabitsPage(){
                     <h1>Meus hábitos</h1>
                     <button onClick={() => setCreatingHabit(true)}>+</button>
                 </Top>
-                {creatingHabit 
-                    ?
-                        <HabitContext.Provider value={ {creatingHabit, setCreatingHabit, creatingHabitData, setCreatingHabitData} } >
+                <HabitContext.Provider value={{
+                    creatingHabit, 
+                    setCreatingHabit, 
+                    creatingHabitData, 
+                    setCreatingHabitData, 
+                    loadUserHabits, 
+                    deletingHabit, 
+                    setDeletingHabit, 
+                    config
+                }}>
+                    {creatingHabit 
+                        ?
                             <CreateHabit/>
-                        </HabitContext.Provider>
-                    :
-                        <></>
-                }
-                <p>
-                    Você não tem nenhum hábito cadastrado ainda. 
-                    Adicione um hábito para começar a trackear!
-                </p>
+                        :
+                            <></>
+                    }
+                    {userHabits
+                        ?
+                            userHabits.map( habit => {
+                                return <Habit key={habit.id} habit={habit} />
+                            })
+                        :
+                            <p>
+                                    Você não tem nenhum hábito cadastrado ainda. 
+                                    Adicione um hábito para começar a trackear!
+                            </p>
+                    }
+                </HabitContext.Provider>
             </Main>
             <Footer />
         </>
@@ -138,6 +119,7 @@ const Top = styled.div`
         height: 35px;
     }
 `;
+
 
 
 
