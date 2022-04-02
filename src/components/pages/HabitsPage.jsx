@@ -3,13 +3,14 @@ import axios from "axios";
 
 import Header from "../Header";
 import Footer from "../Footer";
+import CreateHabit from "../CreateHabit";
 import UserContext from "../../contexts/UserContext";
+import HabitContext from "../../contexts/HabitContext";
 
 import { useEffect, useState, useContext } from "react";
 
 export default function HabitsPage(){
     const getAllHabitsURL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
-    const postHabitURL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
     const { userData, userHabits, setUserHabits } = useContext(UserContext);
     const config = {
         headers: {
@@ -18,13 +19,14 @@ export default function HabitsPage(){
     }
 
     const [creatingHabit, setCreatingHabit] = useState(false);
+    const [creatingHabitData, setCreatingHabitData] = useState( {name: "", days: []} );
 
-    useEffect(() => {
+    function loadUserHabits(){
         axios.get(getAllHabitsURL, config)
         .then(({data}) => {
-            // alert("Getting habits from server!");
+            alert("Getting habits from server!");
             // setUserHabits([]);
-   
+    
             // [
             //     {
             //         id: 1,
@@ -37,26 +39,41 @@ export default function HabitsPage(){
             //         days: [1, 3, 4, 6]
             //     }
             // ]
-
+    
         })
         .catch(error => {
             alert(error.response.data.message);
             // setDisabled(false);
         });
-    }, []);
+    }
 
-    function showCreateHabit(){
-        setCreatingHabit(true);
-    }
+    useEffect(() => {
+        // loadUserHabits();
+        axios.get(getAllHabitsURL, config)
+        .then(({data}) => {
+            console.log(data);
+            // alert("Getting habits from server!");
+            // setUserHabits([]);
     
-    function hideCreateHabit(event){
-        event.preventDefault();
-        setCreatingHabit(false);
-    }
+            // [
+            //     {
+            //         id: 1,
+            //         name: "Nome do hábito",
+            //         days: [1, 3, 5]
+            //     },
+            //     {
+            //         id: 2,
+            //         name: "Nome do hábito 2",
+            //         days: [1, 3, 4, 6]
+            //     }
+            // ]
     
-    function selectWeekday(weekday){
-
-    }
+        })
+        .catch(error => {
+            alert(error.response.data.message);
+            // setDisabled(false);
+        });
+    }, [userHabits]);
 
     return(
         <>
@@ -64,29 +81,15 @@ export default function HabitsPage(){
             <Main >
                 <Top>
                     <h1>Meus hábitos</h1>
-                    <button onClick={showCreateHabit}>+</button>
+                    <button onClick={() => setCreatingHabit(true)}>+</button>
                 </Top>
-                {creatingHabit ?
-                    <CreateHabit>
-                        <form action="">
-                            <input type="text" placeholder="nome do hábito" />
-                            <div>
-                                <input type="button" value="D" onClick={() => selectWeekday(0)} />
-                                <input type="button" value="S" onClick={() => selectWeekday(1)} />
-                                <input type="button" value="T" onClick={() => selectWeekday(2)} />
-                                <input type="button" value="Q" onClick={() => selectWeekday(3)} />
-                                <input type="button" value="Q" onClick={() => selectWeekday(4)} />
-                                <input type="button" value="S" onClick={() => selectWeekday(5)} />
-                                <input type="button" value="S" onClick={() => selectWeekday(6)} />
-                            </div>
-                            <div>
-                                <button onClick={hideCreateHabit} >Cancelar</button>
-                                <button type="submit" >Salvar</button>
-                            </div>
-                        </form>
-                    </CreateHabit>
+                {creatingHabit 
+                    ?
+                        <HabitContext.Provider value={ {creatingHabit, setCreatingHabit, creatingHabitData, setCreatingHabitData} } >
+                            <CreateHabit/>
+                        </HabitContext.Provider>
                     :
-                    <></>
+                        <></>
                 }
                 <p>
                     Você não tem nenhum hábito cadastrado ainda. 
@@ -107,7 +110,6 @@ const Main = styled.main`
     padding: 0px 36px;
     margin-top: 70px;
     margin-bottom: 100px;
-    font-family: 'Lexend Deca';
 
     h1{
         font-size: 23px;
@@ -137,13 +139,5 @@ const Top = styled.div`
     }
 `;
 
-const CreateHabit = styled.section`
 
-    div{
-        display: flex;
-    }
-`;
 
-const Weekdays = styled.div`
-
-`;
