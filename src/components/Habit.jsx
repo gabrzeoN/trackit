@@ -2,69 +2,42 @@ import styled from "styled-components";
 import axios from "axios";
 
 import { useContext, useState } from "react";
-import HabitContext from "../contexts/HabitContext";
+import DeleteHabit from "./DeleteHabit";
 
 export default function Habit( {habit} ){
     const {id, name, days} = habit;
-    const deleteHabitURL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`;
-    const { loadUserHabits, deletingHabit, setDeletingHabit, config } = useContext(HabitContext);
-    
-    function confirmDeleteHabit(){
-        setDeletingHabit(true);
-        
-    }
-
-    function deleteUserHabit(){
-        axios.delete(deleteHabitURL, config)
-        .then((response) => {
-            console.log("deleting");
-            console.log(deleteHabitURL);
-            setDeletingHabit(false);
-            loadUserHabits();
-        })
-        .catch(error => {
-            alert(error.response.data.message);
-        });
-    }
 
     return(
         <HabitContent>
             <div>
                 <p>{name}</p>
-                {
-                    days.map(day => day)
-                }
+                <Weekdays>
+                    <Day id={0} days={days} >D</Day>
+                    <Day id={1} days={days} >S</Day>
+                    <Day id={2} days={days} >T</Day>
+                    <Day id={3} days={days} >Q</Day>
+                    <Day id={4} days={days} >Q</Day>
+                    <Day id={5} days={days} >S</Day>
+                    <Day id={6} days={days} >S</Day>
+                </Weekdays>
             </div>
-            <ion-icon onClick={() => confirmDeleteHabit()} name="trash-outline"></ion-icon>
-            {deletingHabit
-                ?
-                    <DeleteHabit>
-                        <p>Deletar hábito?</p>
-                        <div>
-                            <button onClick={() => deleteUserHabit()} >Sim</button>
-                            <button onClick={() => setDeletingHabit(false)} >Não</button>
-                        </div>
-                    </DeleteHabit>
-                :
-                    <></>
-            }
+            <DeleteHabit id={id} />
         </HabitContent>
     );
 }
 
 const HabitContent = styled.div`
-
+    display: flex;
+    border: 1px solid black;
+    margin: 2px;
 `;
 
-const DeleteHabit = styled.div`
+const Weekdays = styled.div`
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color:  #0000ff22;
-    position: fixed;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    z-index: 1;
+    justify-content: space-between;
+    width: 150px;
+`;
+
+const Day = styled.div`
+    ${({id, days}) => days.includes(id) ? "background-color: #33ff00" : "background-color: red"}
 `;

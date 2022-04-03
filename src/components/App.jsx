@@ -13,7 +13,7 @@ import HistoryPage from "./pages/HistoryPage.jsx";
 import UserContext from "../contexts/UserContext";
 
 export default function App(){
-    const [userHabits, setUserHabits] = useState(null);
+    const [userHabits, setUserHabits] = useState([]);
     // const [userData, setUserData] = useState(null);
     const [userData, setUserData] = useState({
         name: "Joe",

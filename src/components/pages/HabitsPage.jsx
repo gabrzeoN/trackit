@@ -9,7 +9,6 @@ import UserContext from "../../contexts/UserContext";
 import HabitContext from "../../contexts/HabitContext";
 
 import { useEffect, useState, useContext } from "react";
-// import DeleteHabit from "../DeleteHabit";
 
 export default function HabitsPage(){
     const getAllHabitsURL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
@@ -64,7 +63,7 @@ export default function HabitsPage(){
                         :
                             <></>
                     }
-                    {userHabits
+                    {userHabits.length != 0
                         ?
                             userHabits.map( habit => {
                                 return <Habit key={habit.id} habit={habit} />
