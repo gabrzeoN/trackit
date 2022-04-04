@@ -7,10 +7,6 @@ import HabitContext from "../contexts/HabitContext";
 export default function DeleteHabit( {id} ){
     const { loadUserHabits, deletingHabit, setDeletingHabit, config } = useContext(HabitContext);
     const deleteHabitURL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`;
-    
-    // function confirmDeleteHabit(){
-    //     setDeletingHabit(true);
-    // }
 
     function deleteUserHabit(id){
         if(window.confirm("Deseja deletar?")){
@@ -25,34 +21,16 @@ export default function DeleteHabit( {id} ){
         }
     }
 
-    return(  
-        <>
-            <ion-icon onClick={() => deleteUserHabit()} name="trash-outline"></ion-icon>
-            {deletingHabit
-                ?
-                    <DeleteHabitContent>
-                        <p>Deletar hábito?</p>
-                        <div>
-                            <button onClick={() => deleteUserHabit()} >Sim</button>
-                            <button onClick={() => setDeletingHabit(false)} >Não</button>
-                        </div>
-                    </DeleteHabitContent>
-                :
-                <></>
-            }
-        </>      
+    return(
+            <DeleteHabitContent>
+                <ion-icon onClick={() => deleteUserHabit()} name="trash-outline"></ion-icon>
+            </DeleteHabitContent>
     );
 }
 
 const DeleteHabitContent = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color:  #0000ff22;
-    position: fixed;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    z-index: 1;
+    ion-icon{
+        color: #666666;
+        font-size: 20px;
+    }
 `;

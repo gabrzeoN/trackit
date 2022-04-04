@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ThreeDots } from  'react-loader-spinner'
 import UserContext from "../../contexts/UserContext";
-
 import styled from "styled-components";
 import axios from "axios";
 
@@ -43,20 +43,20 @@ export default function LoginPage(){
                     <input 
                         placeholder="email"
                         value={loginData.email}
-                        required
-                        type="email"
+                        // required
+                        // type="email"
                         disabled={disabled}
                         onChange={e => setLoginData({...loginData, email: e.target.value})}
                     />
                     <input 
                         placeholder="senha"
                         value={loginData.password}
-                        required
+                        // required
                         type="password"
                         disabled={disabled}
                         onChange={e => setLoginData({...loginData, password: e.target.value})}
                     />
-                    <button type="submit" disabled={disabled} >Entrar</button>
+                    <button type="submit" disabled={disabled} >{disabled ? <ThreeDots height="100" width="100" color='white' ariaLabel='loading'/> : "Entrar"}</button>
                 </form>
             </UserData>
             <Link to="/cadastro" >
@@ -90,6 +90,11 @@ const Main = styled.main`
     
     input{
         padding-left: 15px;
+        color: #131313;
+
+        &::placeholder{
+            color: #DBDBDB;
+        }
     }
 
     button{
@@ -100,8 +105,12 @@ const Main = styled.main`
         text-align: center;
         color: #FFFFFF;
 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
         :hover{
-            background: #3181b9;
+            background: #126BA5;
         }
     }
 
@@ -112,6 +121,10 @@ const Main = styled.main`
         text-decoration-line: underline;
         color: #52B6FF;
         margin-top: 30px;
+
+        :hover{
+            color: #126BA5;
+        }
     }
 `;
 

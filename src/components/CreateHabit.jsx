@@ -53,7 +53,7 @@ export default function CreateHabit(){
     return (
         <CreateHabitContent>
             <form action="" onSubmit={createHabit}>
-                <input 
+                <InputName 
                     type="text" 
                     required
                     placeholder="nome do hábito" 
@@ -71,8 +71,10 @@ export default function CreateHabit(){
                     <SelectWeekday type="button" value="S" days={creatingHabitData.days} id={6} disabled={disabled} onClick={() => toggleWeekday(6)} />
                 </WeekdaysSelection>
                 <div>
-                    <button onClick={hideCreateHabit} disabled={disabled} >Cancelar</button>
-                    <button type="submit" disabled={disabled} >Salvar</button>
+                    <div>
+                        <button onClick={hideCreateHabit} disabled={disabled} >Cancelar</button>
+                        <button type="submit" disabled={disabled} >Salvar</button>
+                    </div>
                 </div>
             </form>
         </CreateHabitContent>
@@ -80,21 +82,82 @@ export default function CreateHabit(){
 }
 
 const CreateHabitContent = styled.section`
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0px;
+    width: 340px;
+    background: #FFFFFF;
+    border-radius: 5px;
+    padding: 19px;
 
-    div{
+    div div{
+        display: flex;
+        justify-content: flex-end;
     }
-    `;
+
+    div button:first-child{
+        width: 84px;
+        height: 35px;
+        background: #ffffff;
+        border-radius: 5px;
+        border: 0px;
+        font-size: 16px;
+        line-height: 20px;
+        text-align: center;
+        color: #52B6FF;
+    }
+
+    div button:last-child{
+        width: 84px;
+        height: 35px;
+        background: #52B6FF;
+        border-radius: 5px;
+        border: 0px;
+        font-size: 16px;
+        line-height: 20px;
+        text-align: center;
+        color: #ffffff;
+    }
+`;
+
+const InputName = styled.input`
+    width: 303px;
+    height: 45px;
+    padding-left: 15px;
+    font-size: 20px;
+    line-height: 25px;
+    color: #131313;       
+    border-radius: 5px;
+    border: 1px solid #D5D5D5;
+    margin: 6px 0px;
+    &::placeholder{
+        color: #DBDBDB;
+    }
+`;
 
 const WeekdaysSelection = styled.div`
     display: flex;
+    margin: 10px 0px;
 `;
 
 const SelectWeekday = styled.input`
+    width: 30px;
+    height: 30px;
+    border: 1px solid #D5D5D5;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin-right: 4px;
+    font-size: 20px;
+    line-height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     ${({id, days}) => {
         if(days.includes(id)){
-            return "background-color: red; color: #50ff0b;";
+            return "background-color: #CFCFCF; color: white;";
         }else{
-            return "background-color: yellow; color: #083538;";
+            return "background-color: white; color: #CFCFCF;";
         }
     }};
 `;

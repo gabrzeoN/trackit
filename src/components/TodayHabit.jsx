@@ -22,15 +22,6 @@ export default function TodayHabit( {todayHabit, loadUserTodaysHabits} ){
         if(habitDone){
             axios.post(postSetHabitUndoneURL, id,config)
             .then(({data}) => {
-                
-                
-                console.log(data)
-
-                
-
-                // const aux = [...userTodaysHabitsDone];
-                // aux.splice(aux.indexOf(id), 1);
-                // setUserTodaysHabitsDone([...aux]);
                 setHabitDone(!habitDone);
                 loadUserTodaysHabits();
             })
@@ -38,21 +29,6 @@ export default function TodayHabit( {todayHabit, loadUserTodaysHabits} ){
         }else{
             axios.post(postSetHabitDoneURL, id,config)
             .then(({data}) => {
-                
-                
-                console.log(data);
-
-                // const aux = 0;
-                // data.forEach((habit) => {
-                //     if(habit.done){
-                //         aux++;
-                //     }
-                // });
-                // setUserTodaysHabitsDone(aux);
-
-
-
-                // setUserTodaysHabitsDone([...userTodaysHabitsDone, id]);
                 setHabitDone(!habitDone);
                 loadUserTodaysHabits();
             })
@@ -67,7 +43,7 @@ export default function TodayHabit( {todayHabit, loadUserTodaysHabits} ){
                 <h3>Sequência atual: <span>{currentSequence} {currentSequence > 1 ? "dias" : "dia"}</span></h3>
                 <h4>Seu recorde: <span>{highestSequence} {highestSequence > 1 ? "dias" : "dia"}</span></h4>
             </div>
-            <Check id={id}  done={habitDone} onClick={() => toggleCheckHabit()} > {/*userTodaysHabitsDone={userTodaysHabitsDone}  */}
+            <Check id={id}  done={habitDone} onClick={() => toggleCheckHabit()} >
                 <ion-icon name="checkbox" ></ion-icon>
             </Check>
         </TodayHabitContent>
@@ -79,12 +55,26 @@ const TodayHabitContent = styled.div`
     background-color: white;
     width: 340px;
     height: 94px;
-    border: 1px solid black;
-    margin: 2px;
-
+    border-radius: 5px;
+    margin: 5px 0px;
+    padding: 13px;
     color: black;
-
     display: flex;
+    justify-content: space-between;
+
+    h2{
+        font-size: 20px;
+        line-height: 25px;
+        color: #666666;
+        margin-bottom: 7px;
+    }
+
+    h3,
+    h4{
+        font-size: 13px;
+        line-height: 16px;
+        color: #666666;
+    }
 
     h3 span{
         ${({done}) => {
@@ -92,7 +82,7 @@ const TodayHabitContent = styled.div`
                 ? 
                     "color: #8FC549;"
                 :
-                    "color: #EBEBEB;"
+                    "color: #666666;"
             )
         }}
     }
@@ -103,7 +93,7 @@ const TodayHabitContent = styled.div`
                 ? 
                     "color: #8FC549;"
                 :
-                    "color: #EBEBEB;"
+                    "color: #666666;"
             )
         }}
     }
@@ -113,30 +103,19 @@ const TodayHabitContent = styled.div`
     }
 `;
 
-const Name = styled.h2`
-
-`;
-
-const CurrentSequence = styled.p`
-
-`;
-
-const HighestSequence = styled.p`
-
-`;
-
 const Check = styled.button`
     border: 0px;
-    background-color: red;
-    width: 70px;
-    height: 70px;
+    background: white;
+    border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
 
     ion-icon{
-        ${({id, userTodaysHabitsDone, done}) => {
-            return done ? "color: #8FC549;" : "color: #EBEBEB;"  // userTodaysHabitsDone.includes(id) 
+        width: 70px;
+        height: 70px;
+        ${({done}) => {
+            return done ? "color: #8FC549;" : "color: #EBEBEB;"
         }}
     }
 `;

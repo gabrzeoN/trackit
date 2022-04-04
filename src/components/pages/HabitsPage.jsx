@@ -80,23 +80,13 @@ export default function HabitsPage(){
     );
 }
 
-
 const Main = styled.main`
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    padding: 0px 36px;
     margin-top: 70px;
-    margin-bottom: 100px;
-
-    h1{
-        font-size: 23px;
-        line-height: 29px;    
-        color: #126BA5;
-        margin-top: 28px;
-        margin-bottom: 17px;
-    }
+    margin-bottom: 130px;
 
     p{
         font-size: 18px;
@@ -106,15 +96,32 @@ const Main = styled.main`
 `;
 
 const Top = styled.div`
-    background-color: yellow;
-    width: 100%;
+    width: 340px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
+    h1{
+        font-size: 23px;
+        line-height: 29px;    
+        color: #126BA5;
+        margin-top: 28px;
+        margin-bottom: 17px;
+    }
+
     button{
         width: 40px;
         height: 35px;
+        background: #52B6FF;
+        border: 0px;
+        border-radius: 5px;
+
+        font-size: 35px;
+        line-height: 34px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #FFFFFF;
     }
 `;
 

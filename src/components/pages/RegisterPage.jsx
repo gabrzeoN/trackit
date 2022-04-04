@@ -2,7 +2,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ThreeDots } from  'react-loader-spinner'
+import { ThreeDots } from  'react-loader-spinner';
 
 import LogoImg from "../../assets/img/logo-trackit.png";
 
@@ -73,18 +73,12 @@ export default function RegisterPage(){
                         disabled={disabled}
                         onChange={e => setRegisterData({...registerData, image: e.target.value})}
                     />
-                    <button type="submit" disabled={disabled} >Cadastrar</button>
+                    <button type="submit" disabled={disabled} >{disabled ? <ThreeDots height="100" width="100" color='white' ariaLabel='loading'/> : "Cadastrar"}</button>
                 </form>
             </RegisterData>
             <Link to="/" >
                 <p>Já tem uma conta? Faça login!</p>
             </Link>
-            <ThreeDots
-                height="100"
-                width="100"
-                color='grey'
-                ariaLabel='loading'
-            />
         </Main>
     );
 }
@@ -113,6 +107,11 @@ const Main = styled.main`
     
     input{
         padding-left: 15px;
+        color: #131313;
+
+        &::placeholder{
+            color: #DBDBDB;
+        }
     }
 
     button{
@@ -123,8 +122,12 @@ const Main = styled.main`
         text-align: center;
         color: #FFFFFF;
 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
         :hover{
-            background: #3181b9;
+            background: #126BA5;
         }
     }
 
@@ -135,6 +138,10 @@ const Main = styled.main`
         text-decoration-line: underline;
         color: #52B6FF;
         margin-top: 30px;
+
+        :hover{
+            color: #126BA5;
+        }
     }
 `;
 

@@ -78,9 +78,9 @@ export default function TodayPage(){
         <>
             <Header />
             <Main onClick={() => countPercentage()}>
-                <Top>
+                <Top userTodaysHabitsDone={userTodaysHabitsDone} >
                     <h1>{weekdayName + dayjs().format(', DD/MM')}</h1>
-                    {userTodaysHabits.length !== 0
+                    {userTodaysHabitsDone !== 0
                         ?
                             <p>{Math.round(countPercentage())}% dos hábitos concluídos</p>
                         :
@@ -101,22 +101,31 @@ export default function TodayPage(){
 }
 
 const Main = styled.main`
-    background-color: yellow;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0px 36px;
     margin-top: 70px;
-    margin-bottom: 100px;
+    margin-bottom: 130px;
+
+    h1{
+        font-size: 23px;
+        line-height: 29px;
+        color: #126BA5;
+        margin-bottom: 5px;
+    }
 `;
 
 const Top = styled.section`
-    background-color: #FAFF33;
-    width: 100%;
+    margin: 28px 0px;
+    width: 340px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+
+    ${({userTodaysHabitsDone}) => {
+        return userTodaysHabitsDone ? "color: #8FC549" : "color: #BABABA";
+    }}
 `;
 
 const TodaysHabits = styled.section`

@@ -16,15 +16,16 @@ export default function App(){
     const [userHabits, setUserHabits] = useState([]);
     const [userTodaysHabits, setUserTodaysHabits] = useState([]);
     const [userTodaysHabitsDone, setUserTodaysHabitsDone] = useState(0);
-    const [userData, setUserData] = useState(null);
-    // const [userData, setUserData] = useState({
-    //     name: "Joe",
-    //     image: "https://http.cat/411.jpg",
-    //     email: "a@b.com",
-    //     password: "123",
-    //     token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTgzLCJpYXQiOjE2NDg4NDIxMzl9.ePf8CI3-nPPKO01mDHr9DQyAdy124lV205kUrXzZDPc"
-    // });
-    
+    // const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState({
+        name: "Joe",
+        image: "https://http.cat/411.jpg",
+        email: "a@b.com",
+        password: "123",
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTgzLCJpYXQiOjE2NDg4NDIxMzl9.ePf8CI3-nPPKO01mDHr9DQyAdy124lV205kUrXzZDPc"
+    });
+    // image: "https://http.cat/411.jpg"
+ 
     return(
         <UserContext.Provider value={ {userData, setUserData, userHabits, setUserHabits, userTodaysHabits, setUserTodaysHabits, userTodaysHabitsDone, setUserTodaysHabitsDone} } >
             <BrowserRouter>
