@@ -23,7 +23,6 @@ export default function HabitsPage(){
     const [deletingHabit, setDeletingHabit] = useState(false);
     const [creatingHabitData, setCreatingHabitData] = useState( {name: "", days: []} );
 
-
     function loadUserHabits(){
         axios.get(getAllHabitsURL, config)
         .then(({data}) => {
@@ -124,7 +123,3 @@ const Top = styled.div`
         color: #FFFFFF;
     }
 `;
-
-
-
-

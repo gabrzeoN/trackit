@@ -3,11 +3,11 @@ import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 import { Link } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import UserContext from "../contexts/UserContext";
 
 export default function Footer(){
-    const { userData, userTodaysHabits, userTodaysHabitsDone, setUserTodaysHabitsDone } = useContext(UserContext);
+    const { userTodaysHabits, userTodaysHabitsDone } = useContext(UserContext);
 
     function countPercentage(){
         return ( userTodaysHabitsDone /  userTodaysHabits.length) * 100;
@@ -38,7 +38,6 @@ export default function Footer(){
         </FooterContent>
     );
 }
-
 
 const FooterContent = styled.header`
     background: #FFFFFF;

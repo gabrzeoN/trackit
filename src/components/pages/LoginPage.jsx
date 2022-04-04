@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ThreeDots } from  'react-loader-spinner'
+import { ThreeDots } from  'react-loader-spinner';
 import UserContext from "../../contexts/UserContext";
 import styled from "styled-components";
 import axios from "axios";
@@ -43,15 +43,15 @@ export default function LoginPage(){
                     <input 
                         placeholder="email"
                         value={loginData.email}
-                        // required
-                        // type="email"
+                        required
+                        type="email"
                         disabled={disabled}
                         onChange={e => setLoginData({...loginData, email: e.target.value})}
                     />
                     <input 
                         placeholder="senha"
                         value={loginData.password}
-                        // required
+                        required
                         type="password"
                         disabled={disabled}
                         onChange={e => setLoginData({...loginData, password: e.target.value})}
@@ -66,8 +66,6 @@ export default function LoginPage(){
     );
 }
 
-
-
 const Main = styled.main`
     background-color: #FFFFFF;
     height: 100vh;
@@ -75,7 +73,6 @@ const Main = styled.main`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     input,
     button{
         width: 303px;
@@ -91,7 +88,6 @@ const Main = styled.main`
     input{
         padding-left: 15px;
         color: #131313;
-
         &::placeholder{
             color: #DBDBDB;
         }
@@ -100,15 +96,13 @@ const Main = styled.main`
     button{
         border: 0px;
         background: #52B6FF;
-        font-size: 20.976px;
+        font-size: 21px;
         line-height: 26px;
         text-align: center;
         color: #FFFFFF;
-
         display: flex;
         justify-content: center;
         align-items: center;
-
         :hover{
             background: #126BA5;
         }
@@ -121,7 +115,6 @@ const Main = styled.main`
         text-decoration-line: underline;
         color: #52B6FF;
         margin-top: 30px;
-
         :hover{
             color: #126BA5;
         }
@@ -135,7 +128,6 @@ const Logo = styled.section`
     text-align: center;
     color: #126BA5;
     margin-bottom: 80px;
-
     img{
         width: 180px;
         height: 130px;

@@ -83,8 +83,6 @@ export default function RegisterPage(){
     );
 }
 
-
-
 const Main = styled.main`
     background-color: #FFFFFF;
     height: 100vh;

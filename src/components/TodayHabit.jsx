@@ -7,7 +7,7 @@ import { useState, useContext } from "react";
 
 export default function TodayHabit( {todayHabit, loadUserTodaysHabits} ){
     const {id, name, done, currentSequence, highestSequence} = todayHabit;
-    const { userData, userTodaysHabitsDone, setUserTodaysHabitsDone } = useContext(UserContext);
+    const { userData } = useContext(UserContext);
     const config = {
         headers: {
             "Authorization" : `Bearer ${userData.token}`
@@ -18,7 +18,6 @@ export default function TodayHabit( {todayHabit, loadUserTodaysHabits} ){
     const [habitDone, setHabitDone] = useState(done);
 
     function toggleCheckHabit(){
-        console.log(id);
         if(habitDone){
             axios.post(postSetHabitUndoneURL, id,config)
             .then(({data}) => {
@@ -89,7 +88,7 @@ const TodayHabitContent = styled.div`
 
     h4 span{
         ${({currentSequence, highestSequence}) => {
-            return ((currentSequence >= highestSequence && highestSequence !=0) 
+            return ((currentSequence >= highestSequence && highestSequence !== 0) 
                 ? 
                     "color: #8FC549;"
                 :

@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import axios from "axios";
 
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import HabitContext from "../contexts/HabitContext";
 
 export default function DeleteHabit( {id} ){
-    const { loadUserHabits, deletingHabit, setDeletingHabit, config } = useContext(HabitContext);
+    const { loadUserHabits, setDeletingHabit, config } = useContext(HabitContext);
     const deleteHabitURL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`;
 
     function deleteUserHabit(id){
@@ -22,9 +22,9 @@ export default function DeleteHabit( {id} ){
     }
 
     return(
-            <DeleteHabitContent>
-                <ion-icon onClick={() => deleteUserHabit()} name="trash-outline"></ion-icon>
-            </DeleteHabitContent>
+        <DeleteHabitContent>
+            <ion-icon onClick={() => deleteUserHabit()} name="trash-outline"></ion-icon>
+        </DeleteHabitContent>
     );
 }
 

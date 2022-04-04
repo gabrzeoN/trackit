@@ -2,7 +2,7 @@ import styled from "styled-components";
 import axios from "axios";
 import dayjs from "dayjs";
 
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
 
 import Header from "../Header";
 import Footer from "../Footer";

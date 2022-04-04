@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import axios from "axios";
 
-import { useContext, useState } from "react";
 import DeleteHabit from "./DeleteHabit";
 
 export default function Habit( {habit} ){
-    const {id, name, days} = habit;
+    const { name, days} = habit;
 
     return(
         <HabitContent>

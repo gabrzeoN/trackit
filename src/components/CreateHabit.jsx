@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import axios from "axios";
 import { useContext, useState } from "react";
+import { ThreeDots } from  'react-loader-spinner';
 import HabitContext from "../contexts/HabitContext";
-import UserContext from "../contexts/UserContext";
 
 export default function CreateHabit(){
     const postHabitURL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
     const { setCreatingHabit, creatingHabitData, setCreatingHabitData, loadUserHabits, config } = useContext(HabitContext);
-    const { userData } = useContext(UserContext);
     const [disabled, setDisabled] = useState(false);
 
     function hideCreateHabit(event){
@@ -38,7 +37,6 @@ export default function CreateHabit(){
             setDisabled(true);
             axios.post(postHabitURL, creatingHabitData, config)
             .then(({data}) => {
-                console.log(data);
                 clearCreatingHabitData();
                 hideCreateHabit();
                 loadUserHabits();
@@ -73,7 +71,7 @@ export default function CreateHabit(){
                 <div>
                     <div>
                         <button onClick={hideCreateHabit} disabled={disabled} >Cancelar</button>
-                        <button type="submit" disabled={disabled} >Salvar</button>
+                        <button type="submit" disabled={disabled} >{disabled ? <ThreeDots height="50" width="50" color='white' ariaLabel='loading'/> : "Salvar"}</button>
                     </div>
                 </div>
             </form>
@@ -117,6 +115,9 @@ const CreateHabitContent = styled.section`
         line-height: 20px;
         text-align: center;
         color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 `;
 
