@@ -31,8 +31,7 @@ export default function HabitsPage(){
         })
         .catch(error => {
             alert(error.response.data.message);
-        });
-        
+        }); 
     }
 
     useEffect(() => {

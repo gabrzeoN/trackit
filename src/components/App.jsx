@@ -14,6 +14,8 @@ import UserContext from "../contexts/UserContext";
 
 export default function App(){
     const [userHabits, setUserHabits] = useState([]);
+    const [userTodaysHabits, setUserTodaysHabits] = useState([]);
+    const [userTodaysHabitsDone, setUserTodaysHabitsDone] = useState([]);
     // const [userData, setUserData] = useState(null);
     const [userData, setUserData] = useState({
         name: "Joe",
@@ -24,7 +26,7 @@ export default function App(){
     });
 
     return(
-        <UserContext.Provider value={ {userData, setUserData, userHabits, setUserHabits} } >
+        <UserContext.Provider value={ {userData, setUserData, userHabits, setUserHabits, userTodaysHabits, setUserTodaysHabits, userTodaysHabitsDone, setUserTodaysHabitsDone} } >
             <BrowserRouter>
                 <Routes>
                         <Route path="/" element={<LoginPage />} />
