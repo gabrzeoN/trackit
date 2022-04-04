@@ -15,27 +15,44 @@ export default function TodayHabit( {todayHabit, loadUserTodaysHabits} ){
     }
     const postSetHabitDoneURL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`;
     const postSetHabitUndoneURL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`;
-
     const [habitDone, setHabitDone] = useState(done);
 
     function toggleCheckHabit(){
         console.log(id);
         if(habitDone){
             axios.post(postSetHabitUndoneURL, id,config)
-            .then(response => {
-                console.log("desmarcado")
-                const aux = [...userTodaysHabitsDone];
-                aux.splice(aux.indexOf(id), 1);
-                setUserTodaysHabitsDone([...aux]);
+            .then(({data}) => {
+                
+                
+                console.log(data)
+
+                
+
+                // const aux = [...userTodaysHabitsDone];
+                // aux.splice(aux.indexOf(id), 1);
+                // setUserTodaysHabitsDone([...aux]);
                 setHabitDone(!habitDone);
                 loadUserTodaysHabits();
             })
             .catch(error => console.log("desmarcar" + error.response));
         }else{
             axios.post(postSetHabitDoneURL, id,config)
-            .then(response => {
-                console.log("marcado");
-                setUserTodaysHabitsDone([...userTodaysHabitsDone, id]);
+            .then(({data}) => {
+                
+                
+                console.log(data);
+
+                // const aux = 0;
+                // data.forEach((habit) => {
+                //     if(habit.done){
+                //         aux++;
+                //     }
+                // });
+                // setUserTodaysHabitsDone(aux);
+
+
+
+                // setUserTodaysHabitsDone([...userTodaysHabitsDone, id]);
                 setHabitDone(!habitDone);
                 loadUserTodaysHabits();
             })
@@ -44,13 +61,13 @@ export default function TodayHabit( {todayHabit, loadUserTodaysHabits} ){
     }
 
     return(
-        <TodayHabitContent>
+        <TodayHabitContent done={habitDone} currentSequence={currentSequence} highestSequence={highestSequence} >
             <div>
-                <Name>{name}</Name>
-                <CurrentSequence>{currentSequence}</CurrentSequence>
-                <HighestSequence>{highestSequence}</HighestSequence>
+                <h2>{name}</h2>
+                <h3>Sequência atual: <span>{currentSequence} {currentSequence > 1 ? "dias" : "dia"}</span></h3>
+                <h4>Seu recorde: <span>{highestSequence} {highestSequence > 1 ? "dias" : "dia"}</span></h4>
             </div>
-            <Check id={id} userTodaysHabitsDone={userTodaysHabitsDone} done={habitDone} onClick={() => toggleCheckHabit()} >
+            <Check id={id}  done={habitDone} onClick={() => toggleCheckHabit()} > {/*userTodaysHabitsDone={userTodaysHabitsDone}  */}
                 <ion-icon name="checkbox" ></ion-icon>
             </Check>
         </TodayHabitContent>
@@ -68,6 +85,28 @@ const TodayHabitContent = styled.div`
     color: black;
 
     display: flex;
+
+    h3 span{
+        ${({done}) => {
+            return (done 
+                ? 
+                    "color: #8FC549;"
+                :
+                    "color: #EBEBEB;"
+            )
+        }}
+    }
+
+    h4 span{
+        ${({currentSequence, highestSequence}) => {
+            return ((currentSequence >= highestSequence && highestSequence !=0) 
+                ? 
+                    "color: #8FC549;"
+                :
+                    "color: #EBEBEB;"
+            )
+        }}
+    }
 
     ion-icon{
         font-size: 70px;

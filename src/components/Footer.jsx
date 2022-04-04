@@ -1,7 +1,18 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
+import { Link } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
+import UserContext from "../contexts/UserContext";
 
 export default function Footer(){
+    const { userData, userTodaysHabits, userTodaysHabitsDone, setUserTodaysHabitsDone } = useContext(UserContext);
+
+    function countPercentage(){
+        return ( userTodaysHabitsDone /  userTodaysHabits.length) * 100;
+    }
+
     return (
         <FooterContent>
             <h1>Footer Page</h1>
@@ -10,6 +21,10 @@ export default function Footer(){
             </Link>
             <Link to="/hoje" >
                 <p>hoje</p>
+                <p>{Math.round(countPercentage())}</p>
+                <div>
+                    <CircularProgressbar value={Math.round(countPercentage())} text={`${Math.round(countPercentage())}%`} />;
+                </div>
             </Link>
             <Link to="/historico" >
                 <p>historico</p>
@@ -28,4 +43,10 @@ const FooterContent = styled.header`
     bottom: 0px;
     right: 0px;
     left: 0px;
+
+    div{
+        width: 70px;
+        height: 70px;
+    }
+
 `;

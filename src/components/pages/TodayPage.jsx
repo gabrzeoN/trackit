@@ -10,7 +10,7 @@ import TodayHabit from "../TodayHabit";
 import UserContext from "../../contexts/UserContext";
 
 export default function TodayPage(){
-    const { userData, userTodaysHabits, setUserTodaysHabits, userTodaysHabitsDone } = useContext(UserContext);
+    const { userData, userTodaysHabits, setUserTodaysHabits, userTodaysHabitsDone, setUserTodaysHabitsDone } = useContext(UserContext);
     const config = {
         headers: {
             "Authorization" : `Bearer ${userData.token}`
@@ -21,8 +21,16 @@ export default function TodayPage(){
     function loadUserTodaysHabits(){
         axios.get(getTodaysHabitsURL, config)
         .then(({data}) => {
-            console.log(data)
-            setUserTodaysHabits([...data]);    
+            if(data){
+                let aux = 0;
+                data.forEach((habit) => {
+                    if(habit.done){
+                        aux++;
+                    }
+                });
+                setUserTodaysHabitsDone(aux);
+            }
+            setUserTodaysHabits([...data]);
         })
         .catch(error => {
             alert(error.response.data.message);
@@ -30,7 +38,7 @@ export default function TodayPage(){
     }
 
     function countPercentage(){
-        return userTodaysHabitsDone.length / setUserTodaysHabits.length;
+        return ( userTodaysHabitsDone /  userTodaysHabits.length) * 100;
     }
 
     useEffect(() => {
@@ -66,22 +74,19 @@ export default function TodayPage(){
     const weekdayNumber = dayjs().day();
     const weekdayName = translateWeekday(weekdayNumber);
 
-    console.log(weekdayName);
-    // console.log(dayjs());
     return(
         <>
             <Header />
-            <Main >
+            <Main onClick={() => countPercentage()}>
                 <Top>
                     <h1>{weekdayName + dayjs().format(', DD/MM')}</h1>
-                    {userTodaysHabits.length != 0
+                    {userTodaysHabits.length !== 0
                         ?
-                            <p>{countPercentage()}% dos hábitos concluídos</p>
+                            <p>{Math.round(countPercentage())}% dos hábitos concluídos</p>
                         :
                             <p>Nenhum hábito concluído ainda</p>
                     }
                 </Top>
-
                 <TodaysHabits>
                     {
                         userTodaysHabits.map((todayHabit) => {
@@ -89,7 +94,6 @@ export default function TodayPage(){
                         })
                     }
                 </TodaysHabits>
-
             </Main>
             <Footer />
         </>
@@ -107,7 +111,7 @@ const Main = styled.main`
 `;
 
 const Top = styled.section`
-    background-color: yellow;
+    background-color: #FAFF33;
     width: 100%;
     display: flex;
     flex-direction: column;

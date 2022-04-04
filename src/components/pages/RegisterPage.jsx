@@ -1,9 +1,10 @@
+import styled from "styled-components";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-
 import { ThreeDots } from  'react-loader-spinner'
+
+import LogoImg from "../../assets/img/logo-trackit.png";
 
 export default function RegisterPage(){
     const postRegisterURL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up";
@@ -35,7 +36,8 @@ export default function RegisterPage(){
     return(
         <Main >
             <Logo>
-                <h1>Register Page</h1>
+                <img src={LogoImg} alt="Logo" />
+                <h1>TrackIt</h1>
             </Logo>
             <RegisterData>
                 <form action="" onSubmit={register}>
@@ -90,24 +92,71 @@ export default function RegisterPage(){
 
 
 const Main = styled.main`
-    background-color: yellow;
+    background-color: #FFFFFF;
+    height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding: 0px 36px;
+
+    input,
+    button{
+        width: 303px;
+        height: 45px;
+        font-size: 20px;
+        line-height: 25px;
+        color: #DBDBDB;
+        border-radius: 5px;
+        border: 1px solid #D5D5D5;
+        margin: 6px 0px;
+    }
+    
+    input{
+        padding-left: 15px;
+    }
+
+    button{
+        border: 0px;
+        background: #52B6FF;
+        font-size: 20.976px;
+        line-height: 26px;
+        text-align: center;
+        color: #FFFFFF;
+
+        :hover{
+            background: #3181b9;
+        }
+    }
+
+    p{
+        font-size: 14px;
+        line-height: 17px;
+        text-align: center;
+        text-decoration-line: underline;
+        color: #52B6FF;
+        margin-top: 30px;
+    }
 `;
 
 const Logo = styled.section`
+    font-family: 'Playball', cursive;
+    font-size: 69px;
+    line-height: 86px;
+    text-align: center;
+    color: #126BA5;
+    margin-bottom: 80px;
 
+    img{
+        width: 180px;
+        height: 130px;
+    }
 `;
 
 const RegisterData = styled.section`
-    form input,
-    form button{
-        width: 303px;
-        height: 45px;
+    form{
         display: flex;
         flex-direction: column;
-        /* align-items: center; */
+        justify-content: center;
+        align-items: center;
     }
 `;

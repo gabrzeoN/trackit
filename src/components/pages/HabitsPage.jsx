@@ -62,7 +62,7 @@ export default function HabitsPage(){
                         :
                             <></>
                     }
-                    {userHabits.length != 0
+                    {userHabits.length !== 0
                         ?
                             userHabits.map( habit => {
                                 return <Habit key={habit.id} habit={habit} />

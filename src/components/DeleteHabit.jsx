@@ -13,14 +13,16 @@ export default function DeleteHabit( {id} ){
     // }
 
     function deleteUserHabit(id){
-        axios.delete(deleteHabitURL, config)
-        .then((response) => {
-            setDeletingHabit(false);
-            loadUserHabits();
-        })
-        .catch(error => {
-            alert(error.response.data.message);
-        });
+        if(window.confirm("Deseja deletar?")){
+            axios.delete(deleteHabitURL, config)
+            .then((response) => {
+                setDeletingHabit(false);
+                loadUserHabits();
+            })
+            .catch(error => {
+                alert(error.response.data.message);
+            });
+        }
     }
 
     return(  
